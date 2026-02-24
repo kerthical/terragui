@@ -1,0 +1,10 @@
+`const $name = $args => $body` as $declaration where {
+  $name <: r"^[A-Z].+$",
+  $body <: contains bubble `return $return` where {
+    $return <: or {
+      contains r"<.+?>.+?</.+?>",
+      contains r"<.+?/>"
+    }
+  },
+  register_diagnostic(span=$declaration, message="Do not use Variable Functions in component definitions. Use Named Functions instead.", severity="error")
+}

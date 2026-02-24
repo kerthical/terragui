@@ -1,0 +1,11 @@
+`function $name($args) { $body }` as $declaration where {
+  $name <: r"^[A-Z].+$",
+  $body <: contains bubble `return $return` where {
+    $return <: or {
+      contains r"<.+?>.+?</.+?>",
+      contains r"<.+?/>"
+    }
+  },
+  $args <: r"^.+:.*\{.+\}$",
+  register_diagnostic(span=$declaration, message="In components, please do not define the Props type directly, but use types declared separately using 'types'.", severity="error")
+}

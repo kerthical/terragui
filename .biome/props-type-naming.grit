@@ -1,0 +1,12 @@
+`function $name($args) { $body }` as $declaration where {
+  $name <: r"^[A-Z].+$",
+  $body <: contains bubble `return $return` where {
+    $return <: or {
+      contains r"<.+?>.+?</.+?>",
+      contains r"<.+?/>"
+    }
+  },
+  $args <: and { r"^.+:.+$",
+  not r"^.+:.+Props.*$" },
+  register_diagnostic(span=$declaration, message="In a component definition, a property's type name must always end with 'Props'.", severity="error")
+}

@@ -1,0 +1,37 @@
+{
+  "$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
+  "plugins": [".biome/component-varfunc-ban.grit", ".biome/no-direct-props-type.grit", ".biome/props-type-naming.grit"],
+  "vcs": {
+    "clientKind": "git",
+    "enabled": true,
+    "useIgnoreFile": true
+  },
+  "files": {
+    "ignoreUnknown": true
+  },
+  "css": {
+    "parser": {
+      "tailwindDirectives": true
+    }
+  },
+  "formatter": {
+    "indentStyle": "space",
+    "lineWidth": 160
+  },
+  "linter": {
+    "includes": ["**/*", "!src/ui/**"],
+    "rules": {
+      "complexity": {
+        "useLiteralKeys": "off"
+      }
+    }
+  },
+  "assist": {
+    "actions": {
+      "source": {
+        "organizeImports": "on",
+        "useSortedAttributes": "on"
+      }
+    }
+  }
+}

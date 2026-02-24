@@ -1,0 +1,19 @@
+pre-commit:
+  commands:
+    lint-fix:
+      run: npm run lint:fix
+    typst-compile:
+      glob: "*.typ"
+      run: for file in {staged_files}; do typst compile "$file"; done
+
+commit-msg:
+  commands:
+    commitlint:
+      run: npx --no -- commitlint --edit {1}
+
+pre-push:
+  commands:
+    check:
+      run: npm run lint:check
+    build:
+      run: npm run build
