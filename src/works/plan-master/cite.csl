@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<style xmlns="http://purl.org/net/xbiblio/csl" version="1.0" class="in-text" default-locale="ja-JP">
+  <info>
+    <title>Numeric (JP) — Bracketed Number, Comma-Separated Fields (with URL)</title>
+    <id>http://www.zotero.org/styles/custom-numeric-jp-brackets-comma-url</id>
+    <link href="http://www.zotero.org/styles/custom-numeric-jp-brackets-comma-url" rel="self"/>
+    <author>
+      <name>Custom</name>
+    </author>
+    <category citation-format="numeric"/>
+    <category field="generic-base"/>
+    <updated>2026-01-01T00:00:00+09:00</updated>
+    <rights license="http://creativecommons.org/licenses/by-sa/3.0/">CC BY-SA 3.0</rights>
+  </info>
+
+  <macro name="contributors">
+    <choose>
+      <if variable="author">
+        <names variable="author" delimiter=", ">
+          <name form="long"/>
+        </names>
+      </if>
+      <else-if variable="editor">
+        <group>
+          <names variable="editor" delimiter=", ">
+            <name form="long"/>
+          </names>
+          <text value="(編)"/>
+        </group>
+      </else-if>
+    </choose>
+  </macro>
+
+  <macro name="title-with-edition">
+    <choose>
+      <if type="book report thesis manuscript" match="any">
+        <group delimiter=" ">
+          <text variable="edition" prefix="[" suffix="]"/>
+          <text variable="title"/>
+        </group>
+      </if>
+      <else>
+        <text variable="title"/>
+      </else>
+    </choose>
+  </macro>
+
+  <macro name="publisher">
+    <text variable="publisher"/>
+  </macro>
+
+  <macro name="series">
+    <group delimiter=" ">
+      <text variable="collection-title"/>
+      <text variable="collection-number"/>
+    </group>
+  </macro>
+
+  <macro name="year">
+    <date variable="issued">
+      <date-part name="year"/>
+    </date>
+  </macro>
+
+  <macro name="year-paren">
+    <date variable="issued" prefix="(" suffix=")">
+      <date-part name="year"/>
+    </date>
+  </macro>
+
+  <macro name="pages">
+    <text variable="page" prefix="pp. "/>
+  </macro>
+
+  <!-- URLはエントリ末尾（年情報の後）にカンマ区切りで付与 -->
+  <macro name="url">
+    <choose>
+      <if variable="URL">
+        <text variable="URL"/>
+      </if>
+    </choose>
+  </macro>
+
+  <citation collapse="citation-number">
+    <sort>
+      <key variable="citation-number"/>
+    </sort>
+    <layout prefix="[" suffix="]" delimiter=",">
+      <text variable="citation-number"/>
+    </layout>
+  </citation>
+
+  <bibliography>
+    <sort>
+      <key variable="citation-number"/>
+    </sort>
+
+    <layout suffix=".">
+      <group delimiter=" ">
+        <text variable="citation-number" prefix="[" suffix="]"/>
+        <choose>
+          <!-- 論文（例：著者, 論文名, 論文誌名, 巻, 号, pp., (年), URL.） -->
+          <if type="article-journal paper-conference" match="any">
+            <group delimiter=", ">
+              <text macro="contributors"/>
+              <text variable="title"/>
+              <text variable="container-title"/>
+              <text variable="volume"/>
+              <text variable="issue"/>
+              <group delimiter=" ">
+                <text macro="pages"/>
+                <text macro="year-paren"/>
+              </group>
+              <text macro="url"/>
+            </group>
+          </if>
+
+          <!-- 書籍（例：著者, 書名, 出版社, 年, URL.） -->
+          <else>
+            <group delimiter=", ">
+              <text macro="contributors"/>
+              <text macro="title-with-edition"/>
+              <text macro="publisher"/>
+              <text macro="series"/>
+              <text macro="year"/>
+              <text macro="url"/>
+            </group>
+          </else>
+        </choose>
+      </group>
+    </layout>
+  </bibliography>
+</style>
